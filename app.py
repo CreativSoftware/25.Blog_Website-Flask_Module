@@ -48,9 +48,12 @@ class User(UserMixin, db.Model):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
+      
 # DB Initialzation
+with app.app_context():
+    db.create_all()
 
-
+    
 # Forms
 class CommentForm(FlaskForm):
     comment = StringField("Recommendations?", validators=[DataRequired()])
@@ -121,9 +124,7 @@ def logout():
     logout_user()
     flash("You have been Logged out!")
     return redirect(url_for('login'))
-
-with app.app_context():
-    db.create_all()
+  
     
 # first_comment = Comments(comment_text='Great Work!')
 # db.session.add(first_comment)
